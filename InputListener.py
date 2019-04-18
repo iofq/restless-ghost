@@ -17,21 +17,21 @@ class InputListener(MouseListener, KeyboardListener):
         if(self.STOP):
             return False
         if(self.RECORDING):
-            self.log(TimedEvent(0, self.time_ms(), offset([x,y])))   
+            self.log(TimedEvent(0, self.time_ms(), self.calc_offset([x,y])))   
 
     def on_click(self, x, y, button, pressed):
         if(self.STOP):
             return False
         if(self.RECORDING and pressed):
-            self.log(TimedEvent(1, self.time_ms(), offset([x,y,button])))
+            self.log(TimedEvent(1, self.time_ms(), self.calc_offset([x,y,button])))
         elif(self.RECORDING and not(pressed)):
-            self.log(TimedEvent(2, self.time_ms(), offset([x,y,button])))
+            self.log(TimedEvent(2, self.time_ms(), self.calc_offset([x,y,button])))
        
     def on_scroll(self, x, y, dx, dy):
         if(self.STOP):
             return False
         if(self.RECORDING):
-            self.log(TimedEvent(3, self.time_ms(), offset([x,y])))   
+            self.log(TimedEvent(3, self.time_ms(), self.calc_offset([x,y])))   
 
     def on_press(self, key):
             
@@ -71,7 +71,7 @@ class InputListener(MouseListener, KeyboardListener):
             json.dump(event.json(), write_file)
             write_file.write("\n")
 
-    def offset(self, args):
+    def calc_offset(self, args):
         return [self.offset[0] - args[0], self.offset[1] - args[1]] + args[2:]
 
 

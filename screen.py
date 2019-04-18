@@ -1,21 +1,25 @@
 import pyautogui
+import sys
 
 def findImage(img):
     try:
-        loc = pyautogui.locateOnScreen(img, confidence=.4)
-    except pyautogui.ImageNotFoundException as e:
-        print(e)
+        loc = pyautogui.locateOnScreen(img, confidence=.7)
+    except:
+        e = sys.exc_info()
+        print('error with', e)
         return None
     return(loc.left, loc.top, loc.width, loc.height)
 def screenSize():
     size = pyautogui.size()
     return (size.width, size.height)
-def findOSRSWindow():
-    pass
+def findOSRS():
+    return findImage('/home/e/pynee/compass.jpg')[:2] #TODO fix this to be ~/pynee/
 
 
-def test():
-    x = findImage('osrs.jpg')
-    print(x)
-    pyautogui.moveTo(x[0], x[1])
-test()
+#def test():
+#    x = findImage('/home/e/pynee/backpack.jpg')
+#    print(x)
+#    x = findOSRS()
+#    print(x)
+#    pyautogui.moveTo(x)
+#test()

@@ -1,11 +1,10 @@
 #############TODO
 #implement mouse scrolls code==3
-#standardize window via image search
 #loop directory for data accumulation
 #antiban
+#find OSRS instance and calc offset
 #quit hotkey - we'll need another listener
 #this needs to be multiple files and heavily refactored
-#figure out timing/optimize
 from pynput.keyboard import Key, KeyCode, Controller as KeyboardController
 from pynput.mouse import Button, Controller as MouseController
 from pynput.keyboard import _xorg
@@ -20,6 +19,7 @@ from scipy import interpolate
 import math
 import pyautogui
 import json
+import screen
 
 k = KeyboardController()
 m = MouseController()
@@ -40,6 +40,8 @@ def run_data(data): #this method needs a refactor
     timeElapsed = data[-1]["time_ms"] - data[0]["time_ms"]
     clicks = find_clicks(data)
     pressed = []
+    offset = screen.findOSRS()
+    print("offset: ", offset)
 
     startTime = time_ms() 
 
@@ -63,8 +65,8 @@ def run_data(data): #this method needs a refactor
 
         if(code == 0):
             try:
-                x = int(d["data_0"])
-                y = int(d["data_1"])
+                x = offset[0] - int(d["data_0"])
+                y = offset[1] - int(d["data_1"])
             except:
                 pass
             m.position = (x,y)
@@ -72,8 +74,8 @@ def run_data(data): #this method needs a refactor
 
         elif(code == 1):
             try:
-                x = int(d["data_0"])
-                y = int(d["data_1"])
+                x = offset[0] - int(d["data_0"])
+                y = offset[1] - int(d["data_1"])
                 button = d["data_2"]
             except:
                 pass
@@ -92,8 +94,8 @@ def run_data(data): #this method needs a refactor
         
         elif(code == 2):
             try:
-                x = int(d["data_0"])
-                y = int(d["data_1"])
+                x = offset[0] - int(d["data_0"])
+                y = offset[1] - int(d["data_1"])
                 button = d["data_2"]
             except:
                 pass
@@ -270,5 +272,6 @@ if(__name__== "__main__"):
     path = Path.home() / "pynee" / directory
     if(path.exists()):
         for x in path.iterdir():
+            print(x)
             data = load(x)
             run(data)

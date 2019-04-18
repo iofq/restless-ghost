@@ -28,11 +28,14 @@ def unique_file(directory, script):
 if __name__ == "__main__":
     file = file_manager(input("script: "))
     print(file)
+    offset = None
     try:
-        offset = screen.findImage("~/pynee/backpack.jpg")[:2]
+        offset = screen.findOSRS()
     except:
         print("couldn't find OSRS instance...")
-        offest = [0,0]
+
+    if(offset is None):
+        offset = [0,0]
     l = InputListener(file, offset)
     l.start()
 
