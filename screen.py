@@ -1,5 +1,10 @@
 import pyautogui
 import sys
+import os
+
+#TODO
+#use mss and opencv to improve speed.. right now takes us over a second to locate OSRS.
+#add methods for finding game objects.
 
 def findImage(img):
     try:
@@ -8,18 +13,13 @@ def findImage(img):
         e = sys.exc_info()
         print('error with', e)
         return None
+    if(loc is None):
+        print("Couldn't find OSRS instance...")
+        return None
     return(loc.left, loc.top, loc.width, loc.height)
 def screenSize():
     size = pyautogui.size()
     return (size.width, size.height)
 def findOSRS():
-    return findImage('/home/e/pynee/compass.jpg')[:2] #TODO fix this to be ~/pynee/
+    return findImage(os.path.expanduser("~/pynee/compass.jpg"))[:2] #TODO fix this to be ~/pynee/
 
-
-#def test():
-#    x = findImage('/home/e/pynee/backpack.jpg')
-#    print(x)
-#    x = findOSRS()
-#    print(x)
-#    pyautogui.moveTo(x)
-#test()

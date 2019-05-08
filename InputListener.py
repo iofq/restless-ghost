@@ -10,7 +10,7 @@ class InputListener(MouseListener, KeyboardListener):
         self.offset = offset
         self.STOP = False
         self.RECORDING = False
-        
+        self.START_TIME = 0
         open(file, "w+") #clear file
     
     def on_move(self, x, y):
@@ -41,7 +41,6 @@ class InputListener(MouseListener, KeyboardListener):
                 print("Started Recording")
                 self.START_TIME = round(datetime.datetime.utcnow().timestamp() * 1000)
             else:
-                print("Stopped Recording")
                 self.STOP = True
                 return False
         if(self.RECORDING and not(key == Key.f8)):
@@ -61,7 +60,7 @@ class InputListener(MouseListener, KeyboardListener):
                 on_press=self.on_press,
                 on_release=self.on_release) as listener:
                 listener.join()
-        #TODO cleanup, close file, stop thread, ask user to save or delete
+                print("Stopped Recording")
 
     def time_ms(self): 
         return round(datetime.datetime.utcnow().timestamp() * 1000) - self.START_TIME

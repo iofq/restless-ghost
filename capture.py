@@ -1,6 +1,4 @@
 ######TODO
-#variable (generated?) filename/ directory
-#fix time so we start at 0 and pause while not recording
 
 import os
 import screen
@@ -38,4 +36,8 @@ if __name__ == "__main__":
         offset = [0,0]
     l = InputListener(file, offset)
     l.start()
+    keep = input("keep file? ")
+    if not keep.strip():
+        print("deleting file", file)
+        os.remove(file) #clear file
 
