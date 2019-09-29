@@ -139,8 +139,9 @@ def run(data, offset):
     releaseAll(pressed)
 
 def toKey(s):
-    if(len(s.replace("'", "")) == 1):
-        return KeyCode.from_char(s)
+    print('to key@@@@": ', s)
+    if(len(s.replace('"', '')) == 3):
+        return KeyCode.from_char(s.replace("'", ""))
     else:
         return _xorg.Key[s]
 
