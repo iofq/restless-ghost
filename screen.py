@@ -21,5 +21,5 @@ def screenSize():
     size = pyautogui.size()
     return (size.width, size.height)
 def findOSRS():
-    return findImage(os.path.expanduser("~/pynee/compass.jpg"))[:2] #TODO fix this to be ~/pynee/
+    return findImage(os.path.expanduser("~/pynee/scrot.png"))[:2] #TODO fix this to be ~/pynee/
 
